@@ -14,7 +14,7 @@ const useAuth = () => {
 
   useEffect(() => {
     if (authTokens) fetchUserProfile();
-  }, [authTokens]);
+  }, []);
 
   const handleApiError = (
     error,
@@ -119,14 +119,17 @@ const useAuth = () => {
       await apiClient.post("/auth/users/reset_password_confirm/", {
         uid,
         token,
-        new_password
+        new_password,
       });
       return {
         success: true,
         message: "Password has been reset successfully. You can now login.",
       };
     } catch (error) {
-      return handleApiError(error, "Failed to reset password. Please try again");
+      return handleApiError(
+        error,
+        "Failed to reset password. Please try again"
+      );
     }
   };
 
