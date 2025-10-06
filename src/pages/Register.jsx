@@ -1,0 +1,227 @@
+import { useForm } from "react-hook-form";
+import { Link } from "react-router";
+import useAuthContext from "../hook/useAuthContext";
+import ErrorAlert from "../components/ErrorAlert";
+import { useState } from "react";
+
+const Register = () => {
+  const { registerUser, errorMsg } = useAuthContext();
+  const [successMsg, setSuccessMsg] = useState("");
+//   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    delete data.confirm_Password;
+    try {
+      const response = await registerUser(data);
+      if (response.success) {
+        setSuccessMsg(response.message);
+        // setTimeout(() => navigate("/login"), 3000);
+      }
+    } catch (error) {
+      console.log("Registration failed", error);
+    }
+  };
+
+  return (
+    <div className="flex min-h-screen items-center justify-center px-4 py-12 bg-base-200">
+      <div className="card w-full max-w-md bg-base-100 shadow-xl">
+        <div className="card-body">
+          {errorMsg && <ErrorAlert error={errorMsg} />}
+          {successMsg && (
+            <div role="alert" className="alert alert-success">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 shrink-0 stroke-current"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>{successMsg}</span>
+            </div>
+          )}
+          <h2 className="card-title text-2xl font-bold">Sign Up</h2>
+          <p className="text-base-content/70">
+            Create an account to get started
+          </p>
+
+          <form className="space-y-4 mt-4" onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-control">
+              <label className="label" htmlFor="first_name">
+                <span className="label-text">First Name</span>
+              </label>
+              <input
+                id="first_name"
+                type="text"
+                placeholder="John"
+                className={`input input-bordered w-full  ${
+                  errors.first_name ? "input-error" : ""
+                }`}
+                {...register("first_name", {
+                  required: "First name is required",
+                })}
+              />
+              {errors.first_name && (
+                <span className="label-text-alt text-error">
+                  {errors.first_name.message}
+                </span>
+              )}
+            </div>
+
+            <div className="form-control">
+              <label className="label" htmlFor="last_name">
+                <span className="label-text">Last Name</span>
+              </label>
+              <input
+                id="last_name"
+                type="text"
+                placeholder="Doe"
+                className={`input input-bordered w-full  ${
+                  errors.last_name ? "input-error" : ""
+                }`}
+                {...register("last_name", {
+                  required: "last name is required",
+                })}
+              />
+              {errors.last_name && (
+                <span className="label-text-alt text-error">
+                  {errors.last_name.message}
+                </span>
+              )}
+            </div>
+
+            <div className="form-control">
+              <label className="label" htmlFor="email">
+                <span className="label-text">Email</span>
+              </label>
+              <input
+                id="email"
+                type="email"
+                placeholder="name@example.com"
+                className={`input input-bordered w-full  ${
+                  errors.email ? "input-error" : ""
+                }`}
+                {...register("email", {
+                  required: "Email is required",
+                })}
+              />
+              {errors.email && (
+                <span className="label-text-alt text-error">
+                  {errors.email.message}
+                </span>
+              )}
+            </div>
+
+            <div className="form-control">
+              <label className="label" htmlFor="address">
+                <span className="label-text">Address</span>
+              </label>
+              <input
+                id="address"
+                type="text"
+                placeholder="7/A Dhanmondi, Dhaka"
+                className="input input-bordered w-full"
+                {...register("address")}
+              />
+            </div>
+
+            <div className="form-control">
+              <label className="label" htmlFor="phone_number">
+                <span className="label-text">Phone Number</span>
+              </label>
+              <input
+                id="phone_number"
+                type="text"
+                placeholder="0123456789"
+                className="input input-bordered w-full"
+                {...register("phone_number")}
+              />
+            </div>
+
+            <div className="form-control">
+              <label className="label" htmlFor="password">
+                <span className="label-text">Password</span>
+              </label>
+              <input
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                className={`input input-bordered w-full  ${
+                  errors.password ? "input-error" : ""
+                }`}
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be atleast 8 character",
+                  },
+                })}
+              />
+              {errors.password && (
+                <span className="label-text-alt text-error">
+                  {errors.password.message}
+                </span>
+              )}
+            </div>
+
+            <div className="form-control">
+              <label className="label" htmlFor="confirmPassword">
+                <span className="label-text">Confirm Password</span>
+              </label>
+              <input
+                id="confirmPassword"
+                type="password"
+                placeholder="••••••••"
+                className={`input input-bordered w-full  ${
+                  errors.confirm_Password ? "input-error" : ""
+                }`}
+                {...register("confirm_Password", {
+                  required: "Confirm Password is required",
+                  validate: (value) =>
+                    value === watch("password") || "password do not match ",
+                })}
+              />
+              {errors.confirm_Password && (
+                <span className="label-text-alt text-error">
+                  {errors.confirm_Password.message}
+                </span>
+              )}
+            </div>
+
+            <button type="submit" className="btn btn-primary w-full">
+              Register
+            </button>
+          </form>
+
+          <div className="text-center mt-4 space-y-2">
+            <p className="text-base-content/70">
+              Already have an account?{" "}
+              <Link to="/login" className="link link-primary">
+                Sign in
+              </Link>
+            </p>
+            <p className="text-base-content/70">
+              Haven't received activation email?{" "}
+              <Link to="/resend-activation" className="link link-primary">
+                Resend activation email
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Register;
