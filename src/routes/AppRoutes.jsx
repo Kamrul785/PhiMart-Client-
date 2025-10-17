@@ -13,10 +13,11 @@ import RequestPasswordReset from "../components/Registration/RequestPasswordRese
 import ResetPasswordConfirm from "../components/Registration/ResetPasswordConfirm";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Profile from "../pages/Profile";
+import ProductDetail from "../pages/productDetail";
+import Cart from "../pages/Cart";
 
 const AppRoutes = () => {
   return (
-  
     <Routes>
       {/* Public Routes  */}
       <Route element={<MainLayout />}>
@@ -28,7 +29,11 @@ const AppRoutes = () => {
         <Route path="activate/:uid/:token" element={<ActivateAccount />} />
         <Route path="resend-activation" element={<ResendActivation />} />
         <Route path="reset-password" element={<RequestPasswordReset />} />
-        <Route path="password/reset/confirm/:uid/:token" element={<ResetPasswordConfirm />} />
+        <Route
+          path="password/reset/confirm/:uid/:token"
+          element={<ResetPasswordConfirm />}
+        />
+        <Route path="shop/:productId" element={<ProductDetail />} />
       </Route>
 
       {/* Private Routes  */}
@@ -42,6 +47,7 @@ const AppRoutes = () => {
       >
         <Route index element={<Dashboard />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="cart" element={<Cart />} />
       </Route>
     </Routes>
   );

@@ -14,7 +14,7 @@ const useAuth = () => {
 
   useEffect(() => {
     if (authTokens) fetchUserProfile();
-  }, []);
+  }, [authTokens]);
 
   const handleApiError = (
     error,
