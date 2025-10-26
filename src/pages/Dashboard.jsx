@@ -11,7 +11,7 @@ const Dashboard = () => {
         <StatCard icon={FiUser} title="Total Users" value={573} />
         <StatCard icon={FiStar} title="Average Rating" value={4.8} />
       </div>
-      <Order />
+      <Order  />
     </div>
   );
 };

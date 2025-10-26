@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 // import apiClient from "../services/api-client";
 import authApliClient from "../services/auth-api-client";
 
@@ -52,7 +52,7 @@ const useCart = () => {
   const updateCartItemQuantity = useCallback(
     async (itemId, quantity) => {
       try {
-        await authApliClient.patch(`/cart/${cartId}/items/${itemId}/`, {
+        await authApliClient.patch(`/carts/${cartId}/items/${itemId}/`, {
           quantity,
         });
       } catch (error) {
@@ -74,9 +74,19 @@ const useCart = () => {
     [cartId]
   );
 
+  useEffect(() => {
+    const initializeCart = async () => {
+      setLoading(true);
+      await createOrGetCart();
+      setLoading(false);
+    };
+    initializeCart();
+  }, [createOrGetCart]);
+
   return {
     cart,
     loading,
+    cartId,
     createOrGetCart,
     AddCartItems,
     updateCartItemQuantity,

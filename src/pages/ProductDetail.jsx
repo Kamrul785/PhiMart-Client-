@@ -5,6 +5,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { Suspense, useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 import ProductImageGallery from "../components/ProductDetails/productImageGallery";
+import ReviewSection from "../components/Reviews/ReviewSection";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
@@ -20,7 +21,12 @@ const ProductDetail = () => {
     });
   }, [productId]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center min-h-screen ">
+        <span className="loading loading-spinner text-secondary loading-xl "></span>
+      </div>
+    );
   if (!product) return <div>Product Not Found...</div>;
 
   return (
@@ -89,6 +95,7 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
+      <ReviewSection />
     </div>
   );
 };

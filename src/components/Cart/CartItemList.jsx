@@ -1,8 +1,7 @@
-import React from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 
 const CartItemList = ({ items, handleUpdateQuantity, handleRemoveItem }) => {
-  if (items?.length == 0) {
+  if (items?.length === 0) {
     return (
       <div className="py-6 text-center text-gray-500">Your Cart is Empty</div>
     );
@@ -59,7 +58,7 @@ const CartItemList = ({ items, handleUpdateQuantity, handleRemoveItem }) => {
                     </button>
                   </div>
                 </td>
-                <td className="text-right font-medium">{item.total_price}</td>
+                <td className="text-right font-medium">{item.total_price.toFixed(2)}</td>
                 <td>
                   <button
                     className="btn btn-ghost btn-xs btn-circle"
