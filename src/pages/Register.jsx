@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 import useAuthContext from "../hook/useAuthContext";
-import ErrorAlert from "../components/ErrorAlert";
+import ErrorAlert from "../components/ErrorAlert.jsx";
 import { useState } from "react";
 
 const Register = () => {

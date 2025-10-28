@@ -5,7 +5,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { Suspense, useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 import ProductImageGallery from "../components/ProductDetails/ProductImageGallery.jsx";
-import ReviewSection from "../components/Reviews/ReviewSection";
+import ReviewSection from "../components/Reviews/ReviewSection.jsx";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);

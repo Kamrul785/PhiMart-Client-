@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import useCartContext from "../hook/useCartContext";
-import CartItemList from "../components/Cart/CartItemlist";
-import CartSummary from "../components/Cart/CartSummary";
+import CartItemList from "../components/Cart/CartItemList.jsx";
+import CartSummary from "../components/Cart/CartSummary.jsx";
 
 const Cart = () => {
   const {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import OrderCard from "../components/Orders/OrderCard";
+import OrderCard from "../components/Orders/OrderCard.jsx";
 import authApliClient from "../services/auth-api-client";
 
 const Orders = () => {

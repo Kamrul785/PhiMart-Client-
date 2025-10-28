@@ -1,8 +1,8 @@
-import HeroCarousel from "../components/Home/Carousel/HeroCarousel";
-import Category from "../components/Home/Categories/Category";
-import DiscountSection from "../components/Home/Discount/DiscountSection";
-import Features from "../components/Home/Features";
-import Product from "../components/Products/Product";
+import HeroCarousel from "../components/Home/Carousel/HeroCarousel.jsx";
+import Category from "../components/Home/Categories/Category.jsx";
+import DiscountSection from "../components/Home/Discount/DiscountSection.jsx";
+import Features from "../components/Home/Features.jsx";
+import Product from "../components/Products/Product.jsx";
 
 
 const Home = () => {

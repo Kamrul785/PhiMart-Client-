@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import ProfileForm from "../components/Dashboard/Profle/ProfileForm";
-import ProfileButton from "../components/Dashboard/Profle/ProfileButton";
-import PasswordChangeForm from "../components/Dashboard/Profle/PasswordChangeForm";
+import ProfileForm from "../components/Dashboard/Profle/ProfileForm.jsx";
+import ProfileButton from "../components/Dashboard/Profle/ProfileButton.jsx";
+import PasswordChangeForm from "../components/Dashboard/Profle/PasswordChangeForm.jsx";
 import useAuthContext from "../hook/useAuthContext";
-import ErrorAlert from "../components/ErrorAlert";
+import ErrorAlert from "../components/ErrorAlert.jsx";
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
