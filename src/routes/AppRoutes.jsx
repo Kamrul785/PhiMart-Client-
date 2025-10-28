@@ -13,11 +13,11 @@ import RequestPasswordReset from "../components/Registration/RequestPasswordRese
 import ResetPasswordConfirm from "../components/Registration/ResetPasswordConfirm";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Profile from "../pages/Profile";
-import ProductDetail from "../pages/productDetail";
 import Cart from "../pages/Cart";
 import Orders from "../pages/Orders";
 import PaymentSuccess from "../pages/PaymentSuccess";
 import AddProducts from "../pages/AddProducts";
+import ProductDetail from "../pages/ProductDetail.jsx";
 
 const AppRoutes = () => {
   return (
