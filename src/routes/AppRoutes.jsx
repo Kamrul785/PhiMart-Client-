@@ -7,7 +7,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
 import PrivateRoute from "../components/PrivateRoute";
-import ActivateAccount from "../components/Registration/activateAccount";
+import ActivateAccount from "../components/Registration/ActiveAccount";
 import ResendActivation from "../components/Registration/ResendActivation";
 import RequestPasswordReset from "../components/Registration/RequestPasswordReset";
 import ResetPasswordConfirm from "../components/Registration/ResetPasswordConfirm";
