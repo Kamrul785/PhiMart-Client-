@@ -3,17 +3,17 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import { BrowserRouter } from "react-router";
 import AppRoutes from "./routes/AppRoutes.jsx";
-import { AuthProvicder } from "./context/authContext.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
+import { AuthProvider } from "./context/authContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvicder>
+    <AuthProvider>
       <CartProvider>
         <BrowserRouter>
           <AppRoutes />
         </BrowserRouter>
       </CartProvider>
-    </AuthProvicder>
+    </AuthProvider>
   </StrictMode>
 );
