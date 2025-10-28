@@ -9,5 +9,4 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={allContext}>{children}</AuthContext.Provider>
   );
 };
-// commnet 
 export default AuthContext;
