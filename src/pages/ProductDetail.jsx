@@ -4,7 +4,7 @@ import AddToCartButton from "../components/ProductDetails/AddToCartButton";
 import { FaArrowLeft } from "react-icons/fa";
 import { Suspense, useEffect, useState } from "react";
 import apiClient from "../services/api-client";
-import ProductImageGallery from "../components/ProductDetails/productImageGallery";
+import ProductImageGallery from "../components/ProductDetails/ProductImageGallery.jsx";
 import ReviewSection from "../components/Reviews/ReviewSection";
 
 const ProductDetail = () => {
