@@ -28,6 +28,29 @@ const useCart = () => {
     }
   }, [authToken, cartId]);
 
+  // Refresh Cart
+  const refreshCart = useCallback(async () => {
+    if (!cartId) {
+      setCart(null);
+      return;
+    }
+    setLoading(true);
+    try {
+      const response = await authApliClient.get(`/carts/${cartId}/`);
+      setCart(response.data);
+    } catch (error) {
+      console.log("Error refreshing cart", error);
+      // If cart no longer exists (404), clear local storage and state
+      if (error.response?.status === 404) {
+        localStorage.removeItem("cartId");
+        setCartId(null);
+        setCart(null);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [cartId]);
+
   // Add Item to the Cart
   const AddCartItems = useCallback(
     async (product_id, quantity) => {
@@ -38,6 +61,7 @@ const useCart = () => {
           product_id,
           quantity,
         });
+        await refreshCart();
         return response.data;
       } catch (error) {
         console.log("Error Occurs to Adding Items", error);
@@ -45,7 +69,7 @@ const useCart = () => {
         setLoading(false);
       }
     },
-    [cartId, createOrGetCart]
+    [cartId, createOrGetCart, refreshCart]
   );
 
   // Update Item Quantity
@@ -67,21 +91,23 @@ const useCart = () => {
     async (itemId) => {
       try {
         await authApliClient.delete(`carts/${cartId}/items/${itemId}/`);
+        await refreshCart();
       } catch (error) {
         console.log(error);
       }
     },
-    [cartId]
+    [cartId, refreshCart]
   );
 
   useEffect(() => {
     const initializeCart = async () => {
+      if(!authToken) return; 
       setLoading(true);
       await createOrGetCart();
       setLoading(false);
     };
     initializeCart();
-  }, [createOrGetCart]);
+  }, [authToken,createOrGetCart]);
 
   return {
     cart,
@@ -91,6 +117,7 @@ const useCart = () => {
     AddCartItems,
     updateCartItemQuantity,
     deleteCartItems,
+    refreshCart,
   };
 };
 

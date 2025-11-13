@@ -51,7 +51,7 @@ const ReviewForm = ({ onSubmit }) => {
         {isSubmitting ? (
           <>
             <span className="loading loading-spinner loading-xs mr-2"></span>
-            Submittiong..
+            Submitting..
           </>
         ) : (
           "Submit Review"

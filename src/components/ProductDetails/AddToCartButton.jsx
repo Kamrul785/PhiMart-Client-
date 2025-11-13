@@ -6,12 +6,14 @@ const AddToCartButton = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
-  const { AddCartItems } = useCartContext();
+  const { AddCartItems, refreshCart } = useCartContext();
+
   const increaseQuantity = () => {
     if (quantity < product.stock) {
       setQuantity(quantity + 1);
     }
   };
+  
   const decreaseQuantity = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
@@ -24,6 +26,7 @@ const AddToCartButton = ({ product }) => {
       console.log(product.name, product.id, quantity)
       await AddCartItems(product.id, quantity);
       setIsAdded(true);
+      await refreshCart();
       setIsAdding(false);
     } catch (error) {
       console.log(error);

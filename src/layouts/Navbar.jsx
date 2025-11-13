@@ -1,10 +1,16 @@
 import { Link, NavLink } from "react-router";
 import useAuthContext from "../hook/useAuthContext";
-import useCart from "../hook/useCart";
+import useCartContext from "../hook/useCartContext";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const { user, logoutUser } = useAuthContext();
-  const { cart } = useCart();
+  const { cart, refreshCart } = useCartContext();
+
+  useEffect(() => {
+    refreshCart();
+  }, [user, refreshCart]);
+
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="navbar-start">

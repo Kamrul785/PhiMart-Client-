@@ -1,6 +1,14 @@
+import { useState } from "react";
+import { useNavigate } from "react-router";
 import authApliClient from "../../services/auth-api-client";
+import useCartContext from "../../hook/useCartContext";
 
 const CartSummary = ({ totalPrice, itemCount, cartId }) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+   const { createOrGetCart } = useCartContext();
+
   const shipping = itemCount == 0 || parseFloat(totalPrice) > 100 ? 0 : 10;
   const tax = parseFloat(totalPrice) * 0.1;
   const orderTotal = parseFloat(totalPrice) + tax + shipping;
@@ -8,15 +16,40 @@ const CartSummary = ({ totalPrice, itemCount, cartId }) => {
   const deleteCart = () => {
     localStorage.removeItem("cartId");
   };
+
   const createOrder = async () => {
+    if (itemCount === 0) {
+      setError("Your cart is empty. Add items before checkout.");
+      return;
+    }
+    setLoading(true);
+    setError(null);
     try {
       const order = await authApliClient.post("/orders/", { cart_id: cartId });
       if (order.status === 201) {
         deleteCart();
+        await createOrGetCart();
         alert("Order Created Successfully");
+        setTimeout(() => {
+          navigate("/dashboard/orders");
+        }, 2000);
       }
     } catch (error) {
-      console.log(error);
+      console.error("Order creation error:", error);
+      // Handle specific error cases
+      if (error.response?.status === 400) {
+        setError(
+          error.response.data?.message ||
+            "Invalid cart data. Please refresh and try again."
+        );
+      } else if (error.response?.status === 404) {
+        setError("Cart not found. Please refresh the page.");
+        deleteCart();
+      } else {
+        setError("Failed to create order. Please try again.");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -50,9 +83,21 @@ const CartSummary = ({ totalPrice, itemCount, cartId }) => {
             onClick={createOrder}
             className="btn btn-primary w-full"
           >
-            Proceed to Checkout
+            {loading ? (
+              <span className="flex items-center">
+                <span className="loading loading-spinner loading-sm mr-2"></span>
+                Processing....
+              </span>
+            ) : (
+              "Proceed to Checkout"
+            )}
           </button>
         </div>
+        {error && (
+          <div role="alert" className="alert alert-error mt-4">
+            <span>{error}</span>
+          </div>
+        )}
       </div>
     </div>
   );
