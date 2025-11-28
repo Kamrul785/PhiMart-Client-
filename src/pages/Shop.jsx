@@ -3,9 +3,9 @@ import ShopPage from "../components/Shop/ShopPage.jsx";
 
 const Shop = () => {
   return (
-    <div>
+    <main className="bg-gray-50 min-h-screen py-8">
       <ShopPage />
-    </div>
+    </main>
   );
 };
 
