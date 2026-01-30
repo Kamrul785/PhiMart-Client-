@@ -4,11 +4,11 @@ import useAuthContext from "../../hook/useAuthContext";
 import { useState } from "react";
 
 const Navbar = ({ sidebarOpen }) => {
-  const { user, logout } = useAuthContext();
+  const { user, logoutUser } = useAuthContext();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleLogout = () => {
-    logout();
+    logoutUser();
   };
 
   return (
