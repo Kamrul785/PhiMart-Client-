@@ -132,7 +132,7 @@ const Footer = () => {
             <ul className="space-y-4 text-sm">
               <li className="flex items-start gap-3">
                 <FiPhone className="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-400">+1 (555) 123-4567</span>
+                <span className="text-gray-400">+880 1747333257</span>
               </li>
               <li className="flex items-start gap-3">
                 <FiMail className="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5" />
@@ -140,7 +140,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start gap-3">
                 <FiMapPin className="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-400">123 Commerce St, City, State 12345</span>
+                <span className="text-gray-400">Chittagong, Bangladesh</span>
               </li>
             </ul>
           </div>
