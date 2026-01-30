@@ -1,6 +1,17 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 
+// Map UI-friendly sort values to backend ordering parameter values
+const mapSortOrderToOrdering = (sortOrder) => {
+  const sortMap = {
+    'price_asc': 'price',
+    'price_desc': '-price',
+    'newest': '-created_at',
+    'rating': '-rating',
+  };
+  return sortMap[sortOrder] || sortOrder;
+};
+
 const useFetchProducts = (
   currentPage,
   priceRange,
@@ -14,7 +25,8 @@ const useFetchProducts = (
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
-      const url = `/products/?price__gt=${priceRange[0]}&price__lt=${priceRange[1]}&&page=${currentPage}&category_id=${selectedCategory}&search=${searchQuery}&ordering=${sortOrder}`;
+      const ordering = mapSortOrderToOrdering(sortOrder);
+      const url = `/products/?price__gt=${priceRange[0]}&price__lt=${priceRange[1]}&&page=${currentPage}&category_id=${selectedCategory}&search=${searchQuery}&ordering=${ordering}`;
       try {
         const response = await apiClient.get(url);
         const data = await response.data;
