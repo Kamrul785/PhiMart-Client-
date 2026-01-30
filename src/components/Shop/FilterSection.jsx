@@ -147,10 +147,10 @@ const FilterSection = ({
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-teal-600 focus:ring-2 focus:ring-teal-100 transition bg-white"
           >
             <option value="">Relevance</option>
-            <option value="price_asc">Price: Low to High</option>
-            <option value="price_desc">Price: High to Low</option>
-            <option value="newest">Newest First</option>
-            <option value="rating">Top Rated</option>
+            <option value="price">Price: Low to High</option>
+            <option value="-price">Price: High to Low</option>
+            <option value="-created_at">Newest First</option>
+            <option value="-rating">Top Rated</option>
           </select>
         </div>
 
