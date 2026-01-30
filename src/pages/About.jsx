@@ -137,7 +137,7 @@ const About = () => {
               Start Shopping
             </Link>
             <Link
-              to="/contact"
+              to="/about"
               className="border-2 border-white hover:bg-white/10 text-white font-semibold px-8 py-3 rounded-lg transition"
             >
               Contact Us

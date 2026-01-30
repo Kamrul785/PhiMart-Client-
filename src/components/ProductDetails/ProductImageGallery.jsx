@@ -8,7 +8,7 @@ import { Navigation, Thumbs } from "swiper/modules";
 import { useState } from "react";
 import defaultImage from "../../assets/default_product.jpg";
 
-const ProductImageGallery = ({ images, ProductName }) => {
+const ProductImageGallery = ({ images, productName }) => {
   const [thumbsSwiper] = useState(null);
   const displayImages = images.length > 0 ? images : [{ image: defaultImage }];
 
@@ -32,7 +32,7 @@ const ProductImageGallery = ({ images, ProductName }) => {
               <div className="h-full w-full flex items-center justify-center p-4">
                 <img
                   src={imageObj.image}
-                  alt={`${ProductName} - Image ${index + 1}`}
+                  alt={`${productName} - Image ${index + 1}`}
                   className="h-full w-full object-contain max-h-96 sm:max-h-full"
                 />
               </div>
