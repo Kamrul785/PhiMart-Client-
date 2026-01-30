@@ -6,6 +6,7 @@ import { useState } from "react";
 
 const CartSummary = ({ totalPrice, itemCount, cartId }) => {
   const [isProcessing, setIsProcessing] = useState(false);
+  const navigate = useNavigate();
 
   const shipping = itemCount == 0 || parseFloat(totalPrice) > 100 ? 0 : 10;
   const tax = parseFloat(totalPrice) * 0.1;
@@ -108,7 +109,10 @@ const CartSummary = ({ totalPrice, itemCount, cartId }) => {
         </button>
 
         {/* Continue Shopping */}
-        <button className="w-full border-2 border-teal-600 text-teal-600 hover:bg-teal-50 font-bold py-3 px-4 rounded-lg transition-all duration-300">
+        <button 
+          onClick={() => navigate('/shop')}
+          className="w-full border-2 border-teal-600 text-teal-600 hover:bg-teal-50 font-bold py-3 px-4 rounded-lg transition-all duration-300"
+        >
           Continue Shopping
         </button>
 
