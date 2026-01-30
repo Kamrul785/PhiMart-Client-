@@ -50,7 +50,7 @@ const Navbar = ({ sidebarOpen }) => {
           {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50">
               <Link
-                to="/profile"
+                to="/dashboard/profile"
                 className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition"
                 onClick={() => setDropdownOpen(false)}
               >
@@ -58,7 +58,7 @@ const Navbar = ({ sidebarOpen }) => {
                 <span>Profile</span>
               </Link>
               <Link
-                to="/profile"
+                to="/dashboard/profile"
                 className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition"
                 onClick={() => setDropdownOpen(false)}
               >
