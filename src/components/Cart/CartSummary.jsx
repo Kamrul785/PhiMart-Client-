@@ -2,10 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import authApliClient from "../../services/auth-api-client";
 import { FiShield, FiTruck, FiRotateCcw } from "react-icons/fi";
-import { useState } from "react";
+import useCartContext from "../../hook/useCartContext";
 
 const CartSummary = ({ totalPrice, itemCount, cartId }) => {
   const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState(null);
+  const { createOrGetCart } = useCartContext();
+  const navigate = useNavigate();
 
   const shipping = itemCount == 0 || parseFloat(totalPrice) > 100 ? 0 : 10;
   const tax = parseFloat(totalPrice) * 0.1;
@@ -20,7 +23,6 @@ const CartSummary = ({ totalPrice, itemCount, cartId }) => {
       setError("Your cart is empty. Add items before checkout.");
       return;
     }
-    setLoading(true);
     setError(null);
     try {
       setIsProcessing(true);
