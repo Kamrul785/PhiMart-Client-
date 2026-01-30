@@ -136,18 +136,18 @@ const About = () => {
             >
               Start Shopping
             </Link>
-            <Link
-              to="/contact"
+            <a
+              href="#contact"
               className="border-2 border-white hover:bg-white/10 text-white font-semibold px-8 py-3 rounded-lg transition"
             >
               Contact Us
-            </Link>
+            </a>
           </div>
         </div>
       </section>
 
       {/* Contact Info */}
-      <section className="max-w-6xl mx-auto px-4 py-16">
+      <section id="contact" className="max-w-6xl mx-auto px-4 py-16">
         <div className="text-center animate-fade-in-up">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Get In Touch</h2>
           <p className="text-gray-600 mb-8">Have questions? We'd love to hear from you.</p>
