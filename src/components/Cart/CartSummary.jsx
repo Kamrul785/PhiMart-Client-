@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useNavigate } from "react-router";
 import authApliClient from "../../services/auth-api-client";
 import { FiShield, FiTruck, FiRotateCcw } from "react-icons/fi";
 import { useState } from "react";
@@ -14,12 +16,22 @@ const CartSummary = ({ totalPrice, itemCount, cartId }) => {
   };
 
   const createOrder = async () => {
+    if (itemCount === 0) {
+      setError("Your cart is empty. Add items before checkout.");
+      return;
+    }
+    setLoading(true);
+    setError(null);
     try {
       setIsProcessing(true);
       const order = await authApliClient.post("/orders/", { cart_id: cartId });
       if (order.status === 201) {
         deleteCart();
+        await createOrGetCart();
         alert("Order Created Successfully");
+        setTimeout(() => {
+          navigate("/dashboard/orders");
+        }, 2000);
       }
     } catch (error) {
       console.log(error);
@@ -126,6 +138,11 @@ const CartSummary = ({ totalPrice, itemCount, cartId }) => {
             </div>
           </div>
         </div>
+        {error && (
+          <div role="alert" className="alert alert-error mt-4">
+            <span>{error}</span>
+          </div>
+        )}
       </div>
     </div>
   );

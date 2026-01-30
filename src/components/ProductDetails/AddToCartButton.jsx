@@ -25,6 +25,7 @@ const AddToCartButton = ({ product }) => {
     try {
       await AddCartItems(product.id, quantity);
       setIsAdded(true);
+      await refreshCart();
       setIsAdding(false);
       // Reset added state after 2 seconds
       setTimeout(() => setIsAdded(false), 2000);

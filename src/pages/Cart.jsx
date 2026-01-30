@@ -13,13 +13,18 @@ const Cart = () => {
     createOrGetCart,
     updateCartItemQuantity,
     deleteCartItems,
+    refreshCart,
   } = useCartContext();
 
   const [localCart, setLocalCart] = useState(cart);
-
+  const [error, setError] = useState(null);
   useEffect(() => {
     if (!cart && !loading) createOrGetCart();
   }, [createOrGetCart, cart, loading]);
+
+  // useEffect(() => {
+  //   refreshCart();
+  // }, [refreshCart]);
 
   useEffect(() => {
     setLocalCart(cart);
@@ -51,6 +56,7 @@ const Cart = () => {
 
     try {
       await updateCartItemQuantity(itemId, newQuantity);
+      setError(null);
     } catch (error) {
       console.log(error);
       setLocalCart(prevLocalCartCopy); //Rollback to previous state if API fails
@@ -74,6 +80,7 @@ const Cart = () => {
     });
     try {
       await deleteCartItems(itemId);
+      await refreshCart();
     } catch (error) {
       console.log(error);
     }

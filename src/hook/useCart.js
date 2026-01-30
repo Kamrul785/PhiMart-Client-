@@ -49,6 +49,29 @@ const useCart = () => {
     }
   }, [authToken]);
 
+  // Refresh Cart
+  const refreshCart = useCallback(async () => {
+    if (!cartId) {
+      setCart(null);
+      return;
+    }
+    setLoading(true);
+    try {
+      const response = await authApliClient.get(`/carts/${cartId}/`);
+      setCart(response.data);
+    } catch (error) {
+      console.log("Error refreshing cart", error);
+      // If cart no longer exists (404), clear local storage and state
+      if (error.response?.status === 404) {
+        localStorage.removeItem("cartId");
+        setCartId(null);
+        setCart(null);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [cartId]);
+
   // Add Item to the Cart
   const AddCartItems = useCallback(
     async (product_id, quantity) => {
@@ -130,6 +153,7 @@ const useCart = () => {
 
   useEffect(() => {
     const initializeCart = async () => {
+      if(!authToken) return; 
       setLoading(true);
       const storedCartId = localStorage.getItem("cartId");
       
