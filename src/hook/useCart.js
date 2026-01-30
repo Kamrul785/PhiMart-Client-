@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 // import apiClient from "../services/api-client";
 import authApliClient from "../services/auth-api-client";
 
@@ -9,6 +9,26 @@ const useCart = () => {
   const [cart, setCart] = useState(null);
   const [cartId, setCartId] = useState(() => localStorage.getItem("cartId"));
   const [loading, setLoading] = useState(false);
+  const cartIdRef = useRef(cartId);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  // Update ref when cartId changes
+  useEffect(() => {
+    cartIdRef.current = cartId;
+  }, [cartId]);
+
+  // Fetch Cart Data
+  const fetchCart = useCallback(async (id) => {
+    if (!id) return;
+    try {
+      console.log("Fetching cart:", id);
+      const response = await authApliClient.get(`/carts/${id}/`);
+      console.log("Cart fetched successfully:", response.data);
+      setCart(response.data);
+    } catch (error) {
+      console.log("Error fetching cart:", error);
+    }
+  }, []);
 
   // Create New Cart
   const createOrGetCart = useCallback(async () => {
@@ -16,17 +36,18 @@ const useCart = () => {
     try {
       console.log(authToken);
       const response = await authApliClient.post("/carts/");
-      if (!cartId) {
-        localStorage.setItem("cartId", response.data.id);
-        setCartId(response.data.id);
-      }
+      console.log("Cart created:", response.data.id);
+      localStorage.setItem("cartId", response.data.id);
+      setCartId(response.data.id);
+      cartIdRef.current = response.data.id;
       setCart(response.data);
+      return response.data.id;
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
-  }, [authToken, cartId]);
+  }, [authToken]);
 
   // Refresh Cart
   const refreshCart = useCallback(async () => {
@@ -55,13 +76,25 @@ const useCart = () => {
   const AddCartItems = useCallback(
     async (product_id, quantity) => {
       setLoading(true);
-      if (!cartId) await createOrGetCart();
       try {
-        const response = await authApliClient.post(`/carts/${cartId}/items/`, {
+        let currentCartId = cartIdRef.current;
+        
+        // If no cart exists, create one first
+        if (!currentCartId) {
+          currentCartId = await createOrGetCart();
+        }
+
+        console.log("Adding to cart:", currentCartId, product_id, quantity);
+        const response = await authApliClient.post(`/carts/${currentCartId}/items/`, {
           product_id,
           quantity,
         });
-        await refreshCart();
+        
+        console.log("Item added. Fetching updated cart...");
+        // Refetch cart after adding item
+        await new Promise(resolve => setTimeout(resolve, 200));
+        await fetchCart(currentCartId);
+        setRefreshTrigger(prev => prev + 1);
         return response.data;
       } catch (error) {
         console.log("Error Occurs to Adding Items", error);
@@ -69,45 +102,91 @@ const useCart = () => {
         setLoading(false);
       }
     },
-    [cartId, createOrGetCart, refreshCart]
+    [createOrGetCart, fetchCart]
   );
 
   // Update Item Quantity
   const updateCartItemQuantity = useCallback(
     async (itemId, quantity) => {
       try {
-        await authApliClient.patch(`/carts/${cartId}/items/${itemId}/`, {
+        const currentCartId = cartIdRef.current;
+        if (!currentCartId) return;
+        
+        console.log("Updating quantity:", itemId, quantity);
+        await authApliClient.patch(`/carts/${currentCartId}/items/${itemId}/`, {
           quantity,
         });
+        
+        console.log("Quantity updated. Fetching updated cart...");
+        // Refetch cart after updating quantity
+        await new Promise(resolve => setTimeout(resolve, 200));
+        await fetchCart(currentCartId);
+        setRefreshTrigger(prev => prev + 1);
       } catch (error) {
         console.log("Error updating cart Items", error);
       }
     },
-    [cartId]
+    [fetchCart]
   );
 
   // Delete Cart Items
   const deleteCartItems = useCallback(
     async (itemId) => {
       try {
-        await authApliClient.delete(`carts/${cartId}/items/${itemId}/`);
-        await refreshCart();
+        const currentCartId = cartIdRef.current;
+        if (!currentCartId) return;
+        
+        console.log("Deleting item:", itemId);
+        await authApliClient.delete(`/carts/${currentCartId}/items/${itemId}/`);
+        
+        console.log("Item deleted. Fetching updated cart...");
+        // Refetch cart after deleting item
+        await new Promise(resolve => setTimeout(resolve, 200));
+        await fetchCart(currentCartId);
+        setRefreshTrigger(prev => prev + 1);
       } catch (error) {
         console.log(error);
       }
     },
-    [cartId, refreshCart]
+    [fetchCart]
   );
 
   useEffect(() => {
     const initializeCart = async () => {
       if(!authToken) return; 
       setLoading(true);
-      await createOrGetCart();
+      const storedCartId = localStorage.getItem("cartId");
+      
+      if (storedCartId) {
+        // Cart already exists, just fetch it
+        console.log("Cart exists, fetching...");
+        cartIdRef.current = storedCartId;
+        setCartId(storedCartId);
+        try {
+          const response = await authApliClient.get(`/carts/${storedCartId}/`);
+          console.log("Cart fetched successfully:", response.data);
+          setCart(response.data);
+        } catch (error) {
+          console.log("Error fetching cart:", error);
+        }
+      } else {
+        // No cart exists, create a new one
+        console.log("No cart, creating new one...");
+        try {
+          const response = await authApliClient.post("/carts/");
+          console.log("Cart created:", response.data.id);
+          localStorage.setItem("cartId", response.data.id);
+          setCartId(response.data.id);
+          cartIdRef.current = response.data.id;
+          setCart(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
       setLoading(false);
     };
     initializeCart();
-  }, [authToken,createOrGetCart]);
+  }, []);
 
   return {
     cart,
@@ -117,7 +196,8 @@ const useCart = () => {
     AddCartItems,
     updateCartItemQuantity,
     deleteCartItems,
-    refreshCart,
+    fetchCart,
+    refreshTrigger,
   };
 };
 

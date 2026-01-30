@@ -1,60 +1,175 @@
+import { Link } from "react-router";
+import { FiFacebook, FiTwitter, FiInstagram, FiLinkedin, FiMail, FiPhone, FiMapPin } from "react-icons/fi";
+
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="footer sm:footer-horizontal bg-base-300 text-base-content p-10">
-      <nav>
-        <h6 className="footer-title">Services</h6>
-        <a className="link link-hover">Branding</a>
-        <a className="link link-hover">Design</a>
-        <a className="link link-hover">Marketing</a>
-        <a className="link link-hover">Advertisement</a>
-      </nav>
-      <nav>
-        <h6 className="footer-title">Company</h6>
-        <a className="link link-hover">About us</a>
-        <a className="link link-hover">Contact</a>
-        <a className="link link-hover">Jobs</a>
-        <a className="link link-hover">Press kit</a>
-      </nav>
-      <nav>
-        <h6 className="footer-title">Social</h6>
-        <div className="grid grid-flow-col gap-4">
-          <a>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              className="fill-current"
-            >
-              <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path>
-            </svg>
-          </a>
-          <a>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              className="fill-current"
-            >
-              <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
-            </svg>
-          </a>
-          <a>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              className="fill-current"
-            >
-              <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
-            </svg>
-          </a>
+    <footer className="bg-gray-900 text-gray-100">
+      {/* Newsletter Section */}
+      <div className="bg-gradient-to-r from-teal-600 to-teal-400 py-12">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="text-center md:flex md:items-center md:justify-between">
+            <div className="md:flex-1">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                Stay Updated with PhiMart
+              </h2>
+              <p className="text-teal-100">Get the latest deals, new products, and exclusive offers!</p>
+            </div>
+            <div className="mt-6 md:mt-0 md:flex-1 md:ml-8">
+              <div className="flex gap-2">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="flex-1 px-4 py-3 rounded-lg text-gray-900 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-white"
+                />
+                <button className="bg-white hover:bg-gray-100 text-teal-600 font-bold px-6 py-3 rounded-lg transition">
+                  Subscribe
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-      </nav>
+      </div>
+
+      {/* Main Footer Content */}
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          {/* Brand Section */}
+          <div className="animate-fade-in-up">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 bg-gradient-to-br from-teal-600 to-teal-400 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-lg">Φ</span>
+              </div>
+              <h3 className="text-xl font-bold text-white">PhiMart</h3>
+            </div>
+            <p className="text-gray-400 mb-4 text-sm">
+              Your one-stop shop for quality products at unbeatable prices. We're committed to bringing you the best shopping experience.
+            </p>
+            <div className="flex gap-4">
+              <a href="#" className="text-gray-400 hover:text-teal-400 transition transform hover:scale-110">
+                <FiFacebook className="w-5 h-5" />
+              </a>
+              <a href="#" className="text-gray-400 hover:text-teal-400 transition transform hover:scale-110">
+                <FiTwitter className="w-5 h-5" />
+              </a>
+              <a href="#" className="text-gray-400 hover:text-teal-400 transition transform hover:scale-110">
+                <FiInstagram className="w-5 h-5" />
+              </a>
+              <a href="#" className="text-gray-400 hover:text-teal-400 transition transform hover:scale-110">
+                <FiLinkedin className="w-5 h-5" />
+              </a>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div className="animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+            <h4 className="font-bold text-white mb-6 text-lg">Quick Links</h4>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <Link to="/" className="text-gray-400 hover:text-teal-400 transition">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/shop" className="text-gray-400 hover:text-teal-400 transition">
+                  Shop
+                </Link>
+              </li>
+              <li>
+                <Link to="/orders" className="text-gray-400 hover:text-teal-400 transition">
+                  Orders
+                </Link>
+              </li>
+              <li>
+                <a href="#" className="text-gray-400 hover:text-teal-400 transition">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-400 hover:text-teal-400 transition">
+                  Contact Us
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Customer Support */}
+          <div className="animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+            <h4 className="font-bold text-white mb-6 text-lg">Customer Support</h4>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <a href="#" className="text-gray-400 hover:text-teal-400 transition">
+                  Help Center
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-400 hover:text-teal-400 transition">
+                  Shipping Info
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-400 hover:text-teal-400 transition">
+                  Returns & Exchanges
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-400 hover:text-teal-400 transition">
+                  FAQ
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-400 hover:text-teal-400 transition">
+                  Track Order
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div className="animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
+            <h4 className="font-bold text-white mb-6 text-lg">Contact Us</h4>
+            <ul className="space-y-4 text-sm">
+              <li className="flex items-start gap-3">
+                <FiPhone className="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5" />
+                <span className="text-gray-400">+880 1747333257</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <FiMail className="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5" />
+                <span className="text-gray-400">support@phimart.com</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <FiMapPin className="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5" />
+                <span className="text-gray-400">Chittagong, Bangladesh</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="border-t border-gray-800 my-8"></div>
+
+        {/* Bottom Section */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-gray-400">
+          <p>
+            &copy; {currentYear} <span className="text-teal-400 font-bold">PhiMart</span>. All rights reserved.
+          </p>
+          <div className="flex gap-6">
+            <a href="#" className="hover:text-teal-400 transition">
+              Privacy Policy
+            </a>
+            <a href="#" className="hover:text-teal-400 transition">
+              Terms of Service
+            </a>
+            <a href="#" className="hover:text-teal-400 transition">
+              Cookies
+            </a>
+          </div>
+        </div>
+      </div>
     </footer>
   );
 };
 
 export default Footer;
+
