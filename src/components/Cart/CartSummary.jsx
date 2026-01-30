@@ -151,3 +151,5 @@ const CartSummary = ({ totalPrice, itemCount, cartId }) => {
 };
 
 export default CartSummary;
+
+// deployment ready test
