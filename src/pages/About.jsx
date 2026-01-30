@@ -136,12 +136,12 @@ const About = () => {
             >
               Start Shopping
             </Link>
-            <Link
-              to="/about"
-              className="border-2 border-white hover:bg-white/10 text-white font-semibold px-8 py-3 rounded-lg transition"
+            <a
+              href="mailto:support@phimart.com"
+              className="border-2 border-white hover:bg-white/10 text-white font-semibold px-8 py-3 rounded-lg transition inline-block"
             >
               Contact Us
-            </Link>
+            </a>
           </div>
         </div>
       </section>
