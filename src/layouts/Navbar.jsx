@@ -4,6 +4,7 @@ import useCart from "../hook/useCart";
 import { FiShoppingCart, FiUser, FiMenu, FiX } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
+import Logo from "../assets/images/Phimart_logo.png";
 
 const Navbar = ({ toggleSidebar }) => {
   const { user, logoutUser } = useAuthContext();
@@ -42,12 +43,15 @@ const Navbar = ({ toggleSidebar }) => {
             )}
 
             <Link to="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 bg-gradient-to-br from-teal-600 to-teal-400 rounded-lg flex items-center justify-center">
+              {/* <div className="w-8 h-8 bg-gradient-to-br from-teal-600 to-teal-400 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">Φ</span>
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-teal-600 to-teal-400 bg-clip-text text-transparent hidden sm:inline">
                 PhiMart
-              </span>
+              </span> */}
+              <div className="w-34">
+                <img src={Logo} alt="PhiMart Logo" />
+              </div>
             </Link>
           </div>
 
