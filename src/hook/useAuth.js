@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
-import { Navigate } from "react-router";
+import { useNavigate } from "react-router";
 
 const useAuth = () => {
   const [user, setUser] = useState(null);
@@ -11,14 +11,14 @@ const useAuth = () => {
   };
 
   const [authTokens, setAuthTokens] = useState(getToken());
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (authTokens) fetchUserProfile();
   }, [authTokens]);
 
   const handleApiError = (
     error,
-    defaultMessage = "Something went wrong! Try Again "
+    defaultMessage = "Something went wrong! Try Again ",
   ) => {
     if (error.response && error.response.data) {
       const errorMessage = Object.values(error.response.data).flat().join("\n");
@@ -90,7 +90,7 @@ const useAuth = () => {
     } catch (error) {
       return handleApiError(
         error,
-        "Failed to resend activation email. Please try again."
+        "Failed to resend activation email. Please try again.",
       );
     }
   };
@@ -107,7 +107,7 @@ const useAuth = () => {
     } catch (error) {
       return handleApiError(
         error,
-        "Failed to send password reset email. Please try again"
+        "Failed to send password reset email. Please try again",
       );
     }
   };
@@ -128,7 +128,7 @@ const useAuth = () => {
     } catch (error) {
       return handleApiError(
         error,
-        "Failed to reset password. Please try again"
+        "Failed to reset password. Please try again",
       );
     }
   };
@@ -146,7 +146,7 @@ const useAuth = () => {
       return { success: true };
     } catch (error) {
       setErrorMsg(error.response.data?.detail);
-      return { success: false };  
+      return { success: false };
     }
   };
 
@@ -172,6 +172,7 @@ const useAuth = () => {
     setUser(null);
     localStorage.removeItem("authTokens");
     localStorage.removeItem("cartId");
+    navigate("/login");
   };
 
   return {
