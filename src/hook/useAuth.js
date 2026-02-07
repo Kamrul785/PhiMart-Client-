@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
-import { useNavigate } from "react-router";
 
 const useAuth = () => {
   const [user, setUser] = useState(null);
@@ -11,7 +10,7 @@ const useAuth = () => {
   };
 
   const [authTokens, setAuthTokens] = useState(getToken());
-  const navigate = useNavigate();
+  
   useEffect(() => {
     if (authTokens) fetchUserProfile();
   }, [authTokens]);
@@ -172,7 +171,7 @@ const useAuth = () => {
     setUser(null);
     localStorage.removeItem("authTokens");
     localStorage.removeItem("cartId");
-    navigate("/login");
+    
   };
 
   return {

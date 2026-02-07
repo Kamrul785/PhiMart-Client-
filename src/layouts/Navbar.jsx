@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import useAuthContext from "../hook/useAuthContext";
 import useCart from "../hook/useCart";
 import { FiShoppingCart, FiUser, FiMenu, FiX } from "react-icons/fi";
@@ -12,6 +12,7 @@ const Navbar = ({ toggleSidebar }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartItemCount, setCartItemCount] = useState(0);
   const location = useLocation();
+  const navigate = useNavigate();
   const isDashboard = location.pathname.startsWith("/dashboard");
 
   // Sync cart item count with cart changes
@@ -170,7 +171,10 @@ const Navbar = ({ toggleSidebar }) => {
                       Dashboard
                     </Link>
                     <button
-                      onClick={logoutUser}
+                      onClick={() => {
+                        logoutUser();
+                        navigate("/login");
+                      }}
                       className="w-full text-left text-gray-700 hover:text-red-600 py-2 transition cursor-pointer"
                     >
                       Logout
@@ -241,6 +245,7 @@ const Navbar = ({ toggleSidebar }) => {
                     onClick={() => {
                       logoutUser();
                       setMobileMenuOpen(false);
+                      navigate("/login");
                     }}
                     className="w-full text-left px-4 py-2 text-gray-700 hover:bg-red-100 rounded"
                   >

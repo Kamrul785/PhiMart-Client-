@@ -1,14 +1,17 @@
 import { FiMenu, FiX, FiLogOut, FiUser, FiSettings } from "react-icons/fi";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import useAuthContext from "../../hook/useAuthContext";
 import { useState } from "react";
 
 const Navbar = ({ sidebarOpen }) => {
   const { user, logoutUser } = useAuthContext();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logoutUser();
+    setDropdownOpen(false);
+    navigate("/login");
   };
 
   return (
